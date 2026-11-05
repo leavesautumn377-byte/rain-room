@@ -10,10 +10,10 @@ export function rainMix({ amount = 65, texture = 75, scene = 'forest' } = {}) {
   if (scene === 'lake') return { cutoff: 1000 + detail * 1400, levels: { bed: 0, detail: 0, wind: .6 + rain * .3 } };
   const sheltered = scene === 'window';
   return {
-    cutoff: sheltered ? 2600 + detail * 1600 : 6500 + detail * 6500,
+    cutoff: sheltered ? 2800 + detail * 1600 : 5000 + detail * 3500,
     levels: {
-      bed: (.7 + rain * .25) * (1 - detail * .35),
-      detail: (.12 + detail * .55) * (.6 + rain * .4) * (sheltered ? .45 : 1),
+      bed: (.74 + rain * .18) * (1 - detail * .22),
+      detail: (.1 + detail * .48) * (.6 + rain * .4) * (sheltered ? .45 : 1),
       wind: 0
     }
   };

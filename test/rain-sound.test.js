@@ -30,6 +30,18 @@ test('recorded rain preserves detail outdoors and is softened through the window
   }
 });
 
+test('texture reveals raindrops while retaining a softer underlying rain bed', () => {
+  const soft = rainMix({ scene: 'forest', texture: 0 });
+  const clear = rainMix({ scene: 'forest', texture: 100 });
+  const normal = rainMix({ scene: 'forest' });
+  assert.ok(normal.levels.bed > normal.levels.detail);
+  assert.ok(clear.levels.detail / clear.levels.bed > soft.levels.detail / soft.levels.bed * 3);
+  for (const mix of [soft, clear, normal]) {
+    assert.ok(mix.cutoff <= 8500, 'outdoor rain should roll off the sharpest hiss');
+    assert.ok(mix.levels.bed > 0, 'clearer drops should retain a continuous background');
+  }
+});
+
 test('soft drop samples have a rounded onset rather than sharp single-sample clicks', () => {
   const samples = synthesizeRain('glass', 44100, 3, seeded())[0];
   let difference = 0, energy = 0;

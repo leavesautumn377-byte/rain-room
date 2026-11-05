@@ -4,8 +4,8 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { loopChannel, RECORDINGS } from '../src/recordings.js';
 
-test('packaged CC0 recordings are the checked source files', async () => {
-  const hashes = { bed: '5fffe1bb4acdd51270b0fa84614be3fa354155b08f60881f4fe12fd0ff53f423', detail: '97eba2ec0bfb826268057b379b9c4d3522bba8544f21d8fd3da75a2850ada56e' };
+test('packaged CC0 recordings are the curated and balanced excerpts', async () => {
+  const hashes = { bed: '04ebfce1d35385f9a68cc584673c320b0bf8858028252dac94c6d8f0149764c2', detail: 'bc8091bd832ab7a1668e3ed2ed906291e00d7d69fa080a9ae22e33897cb413d9' };
   for (const [kind, url] of Object.entries(RECORDINGS)) {
     const bytes = await readFile(url);
     assert.equal(createHash('sha256').update(bytes).digest('hex'), hashes[kind]);
