@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.tar.gz
+.DS_Store
+Thumbs.db
+.env
+.env.*
+.openai/
+coverage/
+android/build/
+*.keystore
+*.p12
