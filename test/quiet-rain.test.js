@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { quietDrops } from '../scripts/generate-quiet-rain.mjs';
 
 test('quiet raindrops leave most of the track silent rather than forming a rain curtain', () => {
-  for (const rate of [8000, 44100]) {
+  for (const rate of [44100, 48000]) {
     const channels = quietDrops(rate, 8, 377);
     const frame = Math.round(rate * .02);
     let quiet = 0, frames = 0, peak = 0, biggestStep = 0;
