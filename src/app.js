@@ -116,7 +116,7 @@ function renderWeather() {
   $('wind').disabled = prefs.scene === 'window';
   if (prefs.scene === 'window') text('wind-value', '隔窗无风');
   text('light-label', prefs.scene === 'window' ? '室内明暗' : '环境亮度');
-  text('sound-hint', sunny ? '柔和合成微风 · 树荫下安静坐一会儿' : snow ? '柔和底声 ↔ 轻轻的风' : prefs.scene === 'window' ? '实录雨声 · 隔窗柔化，保留细小滴答' : '实录雨声 · 绵密雨幕 ↔ 清晰落雨');
+  text('sound-hint', sunny ? '柔和合成微风 · 树荫下安静坐一会儿' : snow ? '柔和底声 ↔ 轻轻的风' : prefs.scene === 'window' ? '隔窗的轻滴答 · 雨滴之间留一点安静' : '稀疏的轻雨滴 · 柔和一点 ↔ 清楚一点');
   document.querySelector('meta[name="theme-color"]').content = '#efe9d8';
   document.querySelectorAll('[data-preset]').forEach(button => {
     const names = sunny ? { drizzle: '轻风', night: '微风', storm: '清风' } : snow ? { drizzle: '小雪', night: '中雪', storm: '大雪' } : { drizzle: '细雨', night: '中雨', storm: '骤雨' };

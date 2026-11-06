@@ -20,7 +20,7 @@ export function synthesizeBreeze(rate, seconds, random = Math.random) {
 import { RECORDINGS, rainMix, loopChannel } from './recordings.js';
 export { rainMix } from './recordings.js';
 
-/** Local CC0 field recordings, with a separate quiet winter wind bed. */
+/** Local, sparse water-drop textures, with a separate quiet winter wind bed. */
 export class RainAudio {
   constructor() {
     this.enabled = false; this.context = null; this.level = .4;
