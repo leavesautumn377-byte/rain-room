@@ -26,16 +26,17 @@ test('recordings load once, mute gently, and change to wind without losing the s
   const audio = new RainAudio();
   t.after(() => { clearTimeout(audio.suspendTimer); globalThis.window = previous; });
   assert.equal(await audio.toggle(), true);
-  assert.equal(fetch.mock.calls.length, 2);
+  assert.equal(fetch.mock.calls.length, 1);
   assert.ok(audio.layers.bed.gain.value > 0);
+  assert.deepEqual(Object.keys(audio.layers).sort(), ['bed', 'wind']);
   audio.setWeather({ scene: 'day' });
-  assert.equal(audio.layers.detail.gain.value, 0);
+  assert.equal(audio.layers.bed.gain.value, 0);
   assert.ok(audio.layers.wind.gain.value > 0);
   audio.setWeather({ scene: 'lake' });
-  assert.equal(audio.layers.bed.gain.value, 0); assert.equal(audio.layers.detail.gain.value, 0);
+  assert.equal(audio.layers.bed.gain.value, 0); assert.equal(audio.layers.detail, undefined);
   assert.ok(audio.layers.wind.gain.value > 0);
   assert.equal(await audio.toggle(), false); assert.equal(audio.gain.gain.value, 0);
-  assert.equal(await audio.toggle(), true); assert.equal(fetch.mock.calls.length, 2);
+  assert.equal(await audio.toggle(), true); assert.equal(fetch.mock.calls.length, 1);
 });
 
 test('a missing recording does not enable silent audio, and a later retry can recover', async t => {

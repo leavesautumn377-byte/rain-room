@@ -4,8 +4,9 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { loopChannel, RECORDINGS } from '../src/recordings.js';
 
-test('packaged sparse drop textures match the checked generated assets', async () => {
-  const hashes = { bed: '338e2559ab91a329ca6f9fab083425d6490a40f8dac100f1b16c8603d44c79ad', detail: '579664bc3fa10cba6b4adcfb74bde54b2ec3ab9b751f7c68cd5a7a7682e87bdf' };
+test('only the approved rain-on-leaves recording is packaged for rain playback', async () => {
+  const hashes = { bed: '113d987903eea28f28e27e124eaa67844c2312de7ee1bd9c615ede905ce5cd20' };
+  assert.deepEqual(Object.keys(RECORDINGS), ['bed']);
   for (const [kind, url] of Object.entries(RECORDINGS)) {
     const bytes = await readFile(url);
     assert.equal(createHash('sha256').update(bytes).digest('hex'), hashes[kind]);

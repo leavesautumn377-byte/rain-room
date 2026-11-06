@@ -5,7 +5,7 @@ const FILES = /* PRECACHE_FILES */ [
   './assets/scenes/spring.webp', './assets/scenes/pond.webp', './assets/scenes/forest.webp',
   './assets/scenes/lake.webp', './assets/scenes/day.webp', './assets/scenes/window.webp',
   './assets/icon.svg', './assets/icon-192.png', './assets/icon-512.png', './assets/icon-maskable-512.png',
-  './assets/audio/gentle-rain.mp3', './assets/audio/light-rain.mp3',
+  './assets/audio/rain-on-leaves.mp3',
   './src/app.js', './src/install.js', './src/style.css', './src/scene-themes.css',
   './src/interaction.js', './src/audio.js', './src/recordings.js', './src/rain-sound.js', './src/rain.js',
   './src/environment.js', './src/paper-environments.js', './src/paper-ui.css', './src/seasonal-environments.js', './src/cool-environments.js',

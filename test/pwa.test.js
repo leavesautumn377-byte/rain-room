@@ -22,14 +22,14 @@ async function worker() {
   return { handlers, stores, cache, skipped: () => skipped };
 }
 
-test('offline bundle covers every runtime module and both recordings within the project scope', async () => {
+test('offline bundle covers every runtime module and the selected leaf recording within the project scope', async () => {
   const w = await worker();
   let ready;
   w.handlers.install({ waitUntil(promise) { ready = promise; } }); await ready;
   for (const file of await readdir(new URL('../src', import.meta.url))) {
     if (/\.(js|css)$/.test(file)) assert.ok(w.cache.files.includes(scope + 'src/' + file), file);
   }
-  for (const file of ['index.html', 'manifest.webmanifest', 'assets/audio/gentle-rain.mp3', 'assets/audio/light-rain.mp3']) assert.ok(w.cache.files.includes(scope + file));
+  for (const file of ['index.html', 'manifest.webmanifest', 'assets/audio/rain-on-leaves.mp3']) assert.ok(w.cache.files.includes(scope + file));
   assert.ok(w.cache.files.every(url => url.startsWith(scope)));
   const manifest = JSON.parse(await readFile(new URL('../manifest.webmanifest', import.meta.url)));
   assert.equal(manifest.scope, './'); assert.equal(manifest.start_url, './'); assert.equal(manifest.display, 'standalone');

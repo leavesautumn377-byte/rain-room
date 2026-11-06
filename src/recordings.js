@@ -1,6 +1,5 @@
 export const RECORDINGS = {
-  bed: new URL('../assets/audio/gentle-rain.mp3', import.meta.url),
-  detail: new URL('../assets/audio/light-rain.mp3', import.meta.url)
+  bed: new URL('../assets/audio/rain-on-leaves.mp3', import.meta.url)
 };
 
 export function rainMix({ amount = 65, texture = 75, scene = 'forest' } = {}) {
@@ -10,10 +9,10 @@ export function rainMix({ amount = 65, texture = 75, scene = 'forest' } = {}) {
   if (scene === 'lake') return { cutoff: 1000 + detail * 1400, levels: { bed: 0, detail: 0, wind: .6 + rain * .3 } };
   const sheltered = scene === 'window';
   return {
-    cutoff: sheltered ? 2800 + detail * 1600 : 5000 + detail * 3500,
+    cutoff: sheltered ? 3500 + detail * 3500 : Math.min(20000, 6000 + detail * 14000 / .75),
     levels: {
-      bed: (.74 + rain * .18) * (1 - detail * .22),
-      detail: (.1 + detail * .48) * (.6 + rain * .4) * (sheltered ? .45 : 1),
+      bed: (.64 + rain * .36) * (sheltered ? .72 : 1),
+      detail: 0,
       wind: 0
     }
   };
@@ -21,7 +20,7 @@ export function rainMix({ amount = 65, texture = 75, scene = 'forest' } = {}) {
 
 // Overlap the recording's tail with its head; the resulting buffer can loop
 // without a hard cut. Keep stereo timing and the original rain's dynamics.
-export function loopChannel(samples, sampleRate, seconds = 3) {
+export function loopChannel(samples, sampleRate, seconds = 1.25) {
   const overlap = Math.min(Math.round(sampleRate * seconds), Math.floor(samples.length / 4));
   if (overlap < 2) return samples.slice();
   const output = samples.slice(0, samples.length - overlap);

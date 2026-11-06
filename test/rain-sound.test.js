@@ -19,26 +19,28 @@ test('all rain layers produce bounded, non-silent stereo at common audio rates',
     assert.notDeepEqual(channels[0], channels[1]);
   }
 });
-test('recorded rain preserves detail outdoors and is softened through the window', () => {
+test('selected leaf recording stays continuous outdoors and is softened through the window', () => {
   const forest = rainMix({ scene: 'forest' }), window = rainMix({ scene: 'window' });
   assert.ok(window.cutoff < forest.cutoff);
-  assert.ok(window.levels.detail < forest.levels.detail);
+  assert.ok(window.levels.bed < forest.levels.bed);
   for (const scene of ['spring', 'pond', 'forest', 'window']) {
     const mix = rainMix({ scene, texture: 100 });
-    assert.ok(mix.levels.bed > 0); assert.ok(mix.levels.detail > 0);
+    assert.ok(mix.levels.bed > 0); assert.equal(mix.levels.detail, 0);
     assert.equal(mix.levels.wind, 0);
   }
 });
 
-test('texture reveals raindrops while retaining a softer underlying rain bed', () => {
+test('texture changes distance without layering a different rain or synthetic droplets', () => {
   const soft = rainMix({ scene: 'forest', texture: 0 });
   const clear = rainMix({ scene: 'forest', texture: 100 });
   const normal = rainMix({ scene: 'forest' });
   assert.ok(normal.levels.bed > normal.levels.detail);
-  assert.ok(clear.levels.detail / clear.levels.bed > soft.levels.detail / soft.levels.bed * 3);
+  assert.ok(clear.cutoff > soft.cutoff);
+  assert.equal(clear.levels.bed, soft.levels.bed);
+  assert.equal(normal.cutoff, 20000, 'default outdoor setting retains the approved recording tone');
   for (const mix of [soft, clear, normal]) {
-    assert.ok(mix.cutoff <= 8500, 'outdoor rain should roll off the sharpest hiss');
-    assert.ok(mix.levels.bed > 0, 'clearer drops should retain a continuous background');
+    assert.equal(mix.levels.detail, 0, 'only the approved field recording should play');
+    assert.ok(mix.levels.bed > 0, 'the selected rain must remain continuous');
   }
 });
 
